@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { usePuterStore } from "~/lib/puter";
 
 export const meta = () => ([
@@ -11,12 +11,21 @@ const auth = () => {
 
    const {isLoading, auth} = usePuterStore();
    const location = useLocation();
-   const next = location.search.split('next=')[1];
+//    const next = location.search.split('next=')[1]const searchParams = new URLSearchParams(location.search);
+const [searchParams] = useSearchParams();
+const next = searchParams.get('next') || '/';
+
    const navigate = useNavigate();
 
-   useEffect(()=> {
-    if(auth.isAuthenticated) navigate(next);
-   },[auth.isAuthenticated, next])
+//    useEffect(()=> {
+//     if(auth.isAuthenticated) navigate(next);
+//    },[auth.isAuthenticated, next])
+useEffect(() => {
+  if (!isLoading && auth.isAuthenticated) {
+    navigate(next, { replace: true });
+  }
+}, [auth.isAuthenticated, isLoading, next, navigate]);
+
 
   return (
    <main className="bg-[url('/images/bg-auth.svg')] bg-cover min-h-screen flex items-center justify-center">
@@ -39,7 +48,7 @@ const auth = () => {
                         </button>
                     ) : (
                          <button className="auth-button" onClick={auth.signIn}>
-                            <p>Logging In</p>
+                            <p>Log In</p>
                          </button>
                     ) }</>
                 )}
