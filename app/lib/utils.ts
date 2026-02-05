@@ -3,6 +3,14 @@
  * @param bytes - The size in bytes.
  * @returns A string representing the size in B, KB, MB, or GB.
  */
+
+import {type ClassValue, clsx} from "clsx";
+import {twMerge} from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
 export function formatSize(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
 
