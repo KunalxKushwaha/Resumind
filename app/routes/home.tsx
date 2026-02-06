@@ -14,13 +14,6 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
 
-  
-  //  const {auth} = usePuterStore();
-  //  const navigate = useNavigate();
-
-  //  useEffect(()=> {
-  //   if(!auth.isAuthenticated) navigate('/auth?next=/');
-  //  },[auth.isAuthenticated])
    const { auth,kv, isLoading } = usePuterStore();
   const navigate = useNavigate();
    const [resumes, setResumes] = useState<Resume[]>([]);
@@ -32,8 +25,6 @@ export default function Home() {
     }
   }, [auth.isAuthenticated, isLoading, navigate]);
 
-  // Optional: block UI until auth resolves
-  if (isLoading) return null;
 
    useEffect(() => {
     const loadResumes = async () => {
@@ -55,7 +46,7 @@ export default function Home() {
 
 
 
-  return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+  return <main className="min-h-screen bg-[url('/images/bg-main.svg')] bg-no-repeat bg-top bg-cover">
 
     <Navbar />
 
